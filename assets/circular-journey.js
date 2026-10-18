@@ -17,7 +17,7 @@ const el=id=>root.querySelector('#'+id);
 const counter=el('cycle-detail-counter'),category=el('cycle-detail-category'),title=el('cycle-detail-title'),description=el('cycle-detail-description'),impact=el('cycle-detail-impact'),tags=el('cycle-detail-tags'),icon=el('cycle-detail-icon'),progress=el('cycle-progress-bar'),panel=el('cycle-detail'),tour=el('cycle-tour'),prev=el('cycle-prev'),next=el('cycle-next'),scene=el('cycle-orbit-scene');
 const arrowGroup=el('cycle-arrows');
 let current=0,timer=null,playing=false,tiltFrame=0;
-const ICONS=nodes.map(b=>b.querySelector('svg')?.innerHTML||'');
+const atlasIcon=icon.querySelector('.road-atlas-icon');
 const ns='http://www.w3.org/2000/svg';
 function point(deg){const r=deg*Math.PI/180;return [500+341*Math.cos(r),450+352*Math.sin(r)];}
 function addArrowPaths(){
@@ -44,7 +44,7 @@ function update(index,userInitiated=true){
  panel.classList.remove('is-updating');void panel.offsetWidth;panel.classList.add('is-updating');
  counter.textContent=String(current+1).padStart(2,'0')+' / 08';
  category.textContent=item.category;title.textContent=item.name;description.textContent=item.description;impact.textContent=item.impact;
- icon.querySelector('svg').innerHTML=ICONS[current];icon.querySelector('svg').style.color=item.tint;
+ if(atlasIcon){atlasIcon.style.setProperty('--atlas-x',((current%4)*100/3)+'%');atlasIcon.style.setProperty('--atlas-y',(Math.floor(current/4)*100)+'%');}
  progress.style.width=((current+1)*12.5)+'%';progress.parentNode.setAttribute('aria-label','Stage '+(current+1)+' of 8');
  tags.replaceChildren(...item.tags.map(label=>{const chip=document.createElement('span');chip.textContent=label;return chip;}));
  root.dispatchEvent(new CustomEvent('cycle:selected',{detail:{index:current,name:item.name,fromUser:userInitiated}}));

@@ -117,3 +117,16 @@
  .road3d-view:fullscreen .road3d-fullscreen-steps button{padding:5px 7px;font-size:.61rem}
  .road3d-stop-icon{width:27px;height:27px}
 }
+
+/* Photo illustrations extracted from the approved circular waste diagram. */
+.road-atlas-icon{display:inline-block;flex:none;width:48px;height:48px;border-radius:50%;background-image:url("./road-images/eight-stages.webp");background-repeat:no-repeat;background-size:400% 200%;background-position:var(--atlas-x,0%) var(--atlas-y,0%);background-color:#f9fcf8;box-shadow:0 2px 7px rgba(29,84,48,.16);vertical-align:middle}
+.road3d-stop-icon.road-atlas-icon{width:37px;height:37px;border:1px solid #bddbc6;border-radius:50%;background-color:#fff}
+.road3d-stop.is-selected .road-atlas-icon{box-shadow:0 0 0 2px rgba(44,153,92,.28),0 3px 8px rgba(26,92,50,.2)}
+.road3d-view:fullscreen .road3d-stop-icon.road-atlas-icon{width:38px;height:38px}
+.cycle-step-disc .road-atlas-icon{width:91%;height:91%;box-shadow:none}
+.cycle-detail-icon .road-atlas-icon{width:54px;height:54px;box-shadow:none}
+.approval-header-note{font-size:.78rem;font-weight:800;color:#3e8059;text-align:right}
+.approval-footer{padding:31px 0}
+.approval-footer-inner{display:flex;align-items:center;gap:22px;justify-content:space-between;color:#d3ecdb;font-size:.85rem;font-weight:750;text-align:right}
+.approval-footer .brand{color:#f7fff1}
+@media(max-width:680px){.approval-header-note{font-size:.64rem;max-width:45%;line-height:1.35}.approval-footer-inner{flex-direction:column;align-items:flex-start;text-align:left}.road3d-stop-icon.road-atlas-icon{width:33px;height:33px}}

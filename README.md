@@ -107,3 +107,9 @@ Site CI checks the JavaScript syntax with Node and validates the 3D markup and r
 Each of the eight waste-management checkpoints now has a distinct, locally hosted SVG pictogram (source reduction, segregation bins, collection truck, MRF sorting facility, recycling arrows, composting, energy plant, and controlled disposal). SVGs are in `assets/road-icons/` and are used in both the accessible stage buttons and the Three.js labels through a canvas texture.
 
 Use **⛶ Fullscreen** inside the 3D camera controls to enter a dedicated viewport-sized 3D scene. The fullscreen view keeps rotate/zoom, top/perspective/focus/reset controls, the eight checkpoint buttons and a floating explanation panel with previous/next buttons. The **Exit fullscreen** control or **Esc** leaves fullscreen. **F** also toggles fullscreen when the 3D viewer is focused. When WebGL is unavailable, the existing 2D interactive model remains accessible.
+
+## Approval-only homepage — supplied illustration assets
+
+The root homepage is a link-free client-approval presentation. Website navigation and all clickable anchors were removed **from the homepage only**, leaving the interactive eight-stage road, adjustable 3D camera, fullscreen mode, explanations, and guided tour. The other folder-based pages remain in the repository unchanged.
+
+Eight circular visual crops were extracted from the client-provided integrated waste-management infographic and assembled into a single optimized 4×2 WebP sprite atlas at `assets/road-images/eight-stages.webp`. The atlas preserves the illustration as supplied (including small original numbering and details); it is not a new icon design. Stage buttons, 2D fallback stages, explanation card, and 3D stage billboards use the same source artwork. The atlas contains four images per row, 144px square each; 576×288 total. An accompanying 8-image ZIP is available in the ChatGPT conversation.

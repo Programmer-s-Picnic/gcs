@@ -15,7 +15,8 @@ try{
 const reduceMotion=window.matchMedia('(prefers-reduced-motion:reduce)').matches;
 const phone=window.matchMedia('(max-width:600px)').matches;
 const COLORS=['#40b57b','#3e91c8','#55a8ca','#50b393','#69b64c','#92bb59','#e5a356','#95ab77'];
-const ICONS=['generation-reduction','source-segregation','collection-transport','material-recovery','recycling','organic-processing','energy-recovery','scientific-disposal'];
+// Shared client-diagram atlas: eight images in four columns and two rows.
+const STAGE_ATLAS_URL='./assets/road-images/eight-stages.webp';
 const labels=['Generation & Reduction','Source Segregation','Collection & Transport','Material Recovery (MRF)','Recycling','Organic Processing','Energy Recovery','Scientific Disposal'];
 const titles=['Waste Generation & Reduction','Source Segregation','Collection & Transportation','Material Recovery Facility','Recycling','Organic Waste Processing','Energy Recovery','Scientific Disposal'];
 const scene=new THREE.Scene();
@@ -107,6 +108,18 @@ function rounded(ctx,x,y,w,h,r){
  ctx.lineTo(x+w,y+h-r);ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);ctx.lineTo(x+r,y+h);
  ctx.quadraticCurveTo(x,y+h,x,y+h-r);ctx.lineTo(x,y+r);ctx.quadraticCurveTo(x,y,x+r,y);ctx.closePath();
 }
+const atlasImage=new Image(),atlasPainters=[];
+atlasImage.addEventListener('load',()=>{for(const draw of atlasPainters)draw();renderer.render(scene,camera);},{once:true});
+atlasImage.addEventListener('error',()=>console.warn('Waste-management stage image atlas unavailable'),{once:true});
+atlasImage.src=STAGE_ATLAS_URL;
+function atlasDraw(ctx,texture,index,x,y,width,height){
+ const paint=()=>{
+  if(!atlasImage.naturalWidth)return;
+  ctx.drawImage(atlasImage,(index%4)*144,Math.floor(index/4)*144,144,144,x,y,width,height);
+  texture.needsUpdate=true;
+ };
+ if(atlasImage.complete&&atlasImage.naturalWidth)paint();else atlasPainters.push(paint);
+}
 function badgeTexture(head,detail,index,accent,isCenter=false,iconIndex=-1){
  const canvas=document.createElement('canvas');canvas.width=640;canvas.height=isCenter?264:240;
  const ctx=canvas.getContext('2d');
@@ -135,14 +148,7 @@ function badgeTexture(head,detail,index,accent,isCenter=false,iconIndex=-1){
  }
  const tex=new THREE.CanvasTexture(canvas);
 tex.colorSpace=THREE.SRGBColorSpace;tex.anisotropy=Math.min(renderer.capabilities.getMaxAnisotropy(),4);
-if(iconIndex>=0){
- const icon=new Image();
- icon.addEventListener('load',()=>{
-   ctx.drawImage(icon,47,96,62,62);
-   tex.needsUpdate=true;
- },{once:true});
- icon.src='./assets/road-icons/'+ICONS[iconIndex]+'.svg';
-}
+if(iconIndex>=0)atlasDraw(ctx,tex,iconIndex,42,96,70,70);
 return tex;
 }
 const centerSprite=new THREE.Sprite(new THREE.SpriteMaterial({map:badgeTexture('GeoCirculus','Nothing Wasted · Everything Circulated.','↻','#16784f',true),transparent:true,depthWrite:false}));
@@ -165,8 +171,11 @@ for(let i=0;i<8;i++){
  sphere.position.y=2.02;sphere.castShadow=!phone;postGroup.add(sphere);
  const glowRing=new THREE.Mesh(new THREE.TorusGeometry(.78,.09,12,32),new THREE.MeshBasicMaterial({color,transparent:true,opacity:.44}));
  glowRing.rotation.x=-Math.PI/2;glowRing.position.y=1.27;postGroup.add(glowRing);
- const iconTexture=new THREE.TextureLoader().load('./assets/road-icons/'+ICONS[i]+'.svg');
+ const iconCanvas=document.createElement('canvas');
+ iconCanvas.width=192;iconCanvas.height=192;
+ const iconTexture=new THREE.CanvasTexture(iconCanvas);
  iconTexture.colorSpace=THREE.SRGBColorSpace;
+ atlasDraw(iconCanvas.getContext('2d'),iconTexture,i,0,0,192,192);
  const iconSprite=new THREE.Sprite(new THREE.SpriteMaterial({map:iconTexture,transparent:true,depthTest:false,depthWrite:false}));
  iconSprite.position.set(0,2.74,0);iconSprite.scale.set(1.34,1.34,1);
  postGroup.add(iconSprite);

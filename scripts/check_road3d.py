@@ -42,34 +42,33 @@ if "cycle:choose" not in controller or "cycle:selected" not in controller:errors
 if "prefers-reduced-motion" not in css:errors.append("Motion-reduced fallback missing")
 if ".road3d-ready .cycle-orbit-scene" not in css:errors.append("Original diagram fallback hidden incorrectly")
 if "@media(max-width:600px)" not in css:errors.append("Mobile styling absent")
-# Icons must be present in the published assets and valid SVG documents.
-import xml.etree.ElementTree as ET
-slugs=("generation-reduction","source-segregation","collection-transport",
-       "material-recovery","recycling","organic-processing",
-       "energy-recovery","scientific-disposal")
-for i,slug in enumerate(slugs):
-    name=f"assets/road-icons/{slug}.svg"
-    icon=root/name
-    if not icon.exists():
-        errors.append("Missing icon: "+name)
-        continue
-    try:
-        svg=ET.parse(icon).getroot()
-        if not svg.tag.endswith("svg") or svg.attrib.get("viewBox")!="0 0 64 64":
-            errors.append("Invalid icon viewBox: "+name)
-    except ET.ParseError as exc:
-        errors.append("Malformed icon: "+name+" "+str(exc))
-    if f'./{name}' not in html:
-        errors.append("Icon not used for stage "+str(i+1)+": "+name)
+# The supplied diagram is now shipped as a single transparent WebP atlas.
+atlas=root/"assets/road-images/eight-stages.webp"
+if not atlas.is_file():
+    errors.append("The source illustration atlas is missing")
+else:
+    data=atlas.read_bytes()
+    if data[:4]!=b"RIFF" or data[8:12]!=b"WEBP":
+        errors.append("Source illustration atlas is not a WebP file")
+if html.count('data-road-stop=')!=8:
+    errors.append("The eight illustrated road selectors are not all present")
+if html.count('road-atlas-icon')<17:
+    errors.append("Source illustrations must appear in 3D selectors and 2D fallback")
+if "<a " in html or "<a>" in html or "href=" in html and "<a" in html:
+    errors.append("Approval-only homepage must contain no clickable anchors")
+if "atlasDraw(" not in road or "road-images/eight-stages.webp" not in road:
+    errors.append("The 3D scene is not using the client-provided stage illustrations")
+if "road-icons/" in road:
+    errors.append("Generic 3D icons are still referenced")
 for ident in ("road3d-fullscreen","road3d-exit","road3d-fullscreen-caption",
               "road3d-fullscreen-title","road3d-fullscreen-description",
               "road3d-fullscreen-prev","road3d-fullscreen-next"):
     if ident not in page.ids:errors.append("Missing fullscreen interface: "+ident)
 for marker in ("requestFullscreen()","document.exitFullscreen()","fullscreenchange",
                "fullDescription.textContent","road3d-fullscreen-prev",
-               "drawImage(icon"):
+               "atlasDraw("):
     if marker not in road:errors.append("Fullscreen or icon rendering missing: "+marker)
 if ".road3d-view:fullscreen" not in css or "road3d-fullscreen-caption" not in css:
     errors.append("Fullscreen layout missing")
 if errors:raise SystemExit("\n".join(errors))
-print("3D road: 8 illustrated checkpoints, camera controls, fullscreen, mobile styling, and fallback verified.")
+print("3D road: supplied images, link-free approval homepage, fullscreen and fallback verified.")
