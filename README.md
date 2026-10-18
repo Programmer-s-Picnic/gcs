@@ -87,3 +87,9 @@ Source maintained in Programmer-s-Picnic/gcs.
 ## Venture presentation
 
 The **20-slide restyled web presentation** is available at `presentation/index.html`, with slide content in `presentation/data.js`, display logic in `presentation/deck.js`, and styling in `presentation/deck.css`. It preserves the pitch deck's topics and reported figures but is a browser-native redesign rather than embedded PowerPoint screenshots. It includes autoplay, fullscreen, keyboard and touch controls, direct slide links, and an overview grid. The uploaded source PPTX is not hosted in this repository.
+
+## Interactive circular-journey home hero
+
+The homepage recreates the eight-stage GeoCirculus integrated waste-management model as an interactive CSS 3D-style diagram. Stage labels and order follow the client graphic (generation and reduction; segregation; collection/transport; MRF; recycling; organics; energy recovery; scientific disposal). Each button changes a detailed educational panel. Controls include prior/next navigation, a 6.5-second guided tour, mouse-responsive depth, keyboard arrow navigation and a mobile two-column layout. An explanatory note clarifies that treatment pathways are alternatives for different waste fractions, not obligatory sequential processing.
+
+Change copy and learning tags in `assets/circular-journey.js`; change layout/theme in `assets/circular-journey.css`; adjust the actual eight stage buttons in root `index.html`. The original diagram was recreated in browser-native vector/CSS components; the source bitmap is not included. CI runs `scripts/check_cycle_hero.py` and `node --check assets/circular-journey.js`.

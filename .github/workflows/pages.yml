@@ -24,7 +24,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Validate folder-based site
-        run: python3 scripts/check_site.py
+        run: |
+          python3 scripts/check_site.py
+          python3 scripts/check_cycle_hero.py
+          node --check assets/circular-journey.js
       - name: Prepare deployment directory
         run: |
           mkdir -p _site
