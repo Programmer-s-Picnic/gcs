@@ -2,6 +2,7 @@
 """Verify 3D road integration without requiring a GPU or external CDN."""
 from pathlib import Path
 from html.parser import HTMLParser
+import re
 root=Path(__file__).resolve().parents[1]
 html=(root/"index.html").read_text(encoding="utf-8")
 road=(root/"assets/circular-road-3d.js").read_text(encoding="utf-8")
@@ -54,7 +55,7 @@ if html.count('data-road-stop=')!=8:
     errors.append("The eight illustrated road selectors are not all present")
 if html.count('road-atlas-icon')<17:
     errors.append("Source illustrations must appear in 3D selectors and 2D fallback")
-if "<a " in html or "<a>" in html or "href=" in html and "<a" in html:
+if re.search(r"<a(?:\\s|>)", html, re.I):
     errors.append("Approval-only homepage must contain no clickable anchors")
 if "atlasDraw(" not in road or "road-images/eight-stages.webp" not in road:
     errors.append("The 3D scene is not using the client-provided stage illustrations")
