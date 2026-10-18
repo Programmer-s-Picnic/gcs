@@ -55,7 +55,7 @@ if html.count('data-road-stop=')!=8:
     errors.append("The eight illustrated road selectors are not all present")
 if html.count('road-atlas-icon')<17:
     errors.append("Source illustrations must appear in 3D selectors and 2D fallback")
-if re.search(r"<a(?:\\s|>)", html, re.I):
+if re.search(r"<a(?:\s|>)", html, re.I):
     errors.append("Approval-only homepage must contain no clickable anchors")
 if "atlasDraw(" not in road or "road-images/eight-stages.webp" not in road:
     errors.append("The 3D scene is not using the client-provided stage illustrations")
