@@ -208,6 +208,21 @@ const exitButton=document.getElementById('road3d-exit');
 const fullCount=document.getElementById('road3d-fullscreen-count');
 const fullTitle=document.getElementById('road3d-fullscreen-title');
 const fullDescription=document.getElementById('road3d-fullscreen-description');
+const fullTour=document.getElementById('road3d-fullscreen-tour');
+const fullTourSymbol=fullTour.querySelector('.road3d-tour-symbol');
+const fullTourLabel=fullTour.querySelector('.road3d-tour-label');
+const fullTourDuration=fullTour.querySelector('.road3d-tour-duration');
+function updateFullTour(playing){
+ fullTour.setAttribute('aria-pressed',String(playing));
+ fullTour.setAttribute('aria-label',playing?'Pause guided tour':'Play guided tour through the eight stages');
+ fullTourSymbol.textContent=playing?'Ⅱ':'▶';
+ fullTourLabel.textContent=playing?'Pause guided tour':'Play guided tour';
+ fullTourDuration.textContent=playing?'Auto-advancing every 6.5s':'8 stages · 6.5s each';
+ fullTour.classList.toggle('is-playing',playing);
+}
+fullTour.addEventListener('click',()=>root.dispatchEvent(new CustomEvent('cycle:toggle-tour')));
+root.addEventListener('cycle:tour-state',event=>updateFullTour(Boolean(event.detail?.playing)));
+updateFullTour(document.getElementById('cycle-tour')?.getAttribute('aria-pressed')==='true');
 function isFullscreen(){return document.fullscreenElement===fullView;}
 function refreshFullscreen(){
  const open=isFullscreen();

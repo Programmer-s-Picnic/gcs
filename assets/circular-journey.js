@@ -49,14 +49,21 @@ function update(index,userInitiated=true){
  tags.replaceChildren(...item.tags.map(label=>{const chip=document.createElement('span');chip.textContent=label;return chip;}));
  root.dispatchEvent(new CustomEvent('cycle:selected',{detail:{index:current,name:item.name,fromUser:userInitiated}}));
 }
+function publishTourState(){
+ // A single source of truth for page and fullscreen tour buttons.
+ root.dispatchEvent(new CustomEvent('cycle:tour-state',{detail:{playing,intervalMs:6500}}));
+}
 function play(){
  if(playing){pause();return;}
  playing=true;tour.innerHTML='<span aria-hidden="true">Ⅱ</span> Pause guided tour';tour.setAttribute('aria-pressed','true');
  timer=setInterval(()=>{if(document.hidden){pause();return;}update(current+1,false);},6500);
+ publishTourState();
 }
 function pause(){
  clearInterval(timer);timer=null;playing=false;tour.innerHTML='<span aria-hidden="true">▶</span> Play guided tour';tour.setAttribute('aria-pressed','false');
+ publishTourState();
 }
+root.addEventListener('cycle:toggle-tour',()=>{if(playing)pause();else play();});
 root.addEventListener('cycle:choose',event=>{const index=Number(event.detail?.index);if(Number.isInteger(index)&&index>=0&&index<steps.length)update(index);});
 nodes.forEach((node,index)=>{
  node.addEventListener('click',()=>update(index));

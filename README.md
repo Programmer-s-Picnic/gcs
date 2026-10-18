@@ -113,3 +113,7 @@ Use **⛶ Fullscreen** inside the 3D camera controls to enter a dedicated viewpo
 The root homepage is a link-free client-approval presentation. Website navigation and all clickable anchors were removed **from the homepage only**, leaving the interactive eight-stage road, adjustable 3D camera, fullscreen mode, explanations, and guided tour. The other folder-based pages remain in the repository unchanged.
 
 Eight circular visual crops were extracted from the client-provided integrated waste-management infographic and assembled into a single optimized 4×2 WebP sprite atlas at `assets/road-images/eight-stages.webp`. The atlas preserves the illustration as supplied (including small original numbering and details); it is not a new icon design. Stage buttons, 2D fallback stages, explanation card, and 3D stage billboards use the same source artwork. The atlas contains four images per row, 144px square each; 576×288 total. An accompanying 8-image ZIP is available in the ChatGPT conversation.
+
+### Fullscreen guided tour
+
+The fullscreen stage description now has a **Play guided tour / Pause guided tour** button. It uses the exact same eight-stage, 6.5-second tour as the homepage explanation card; the two controls synchronize through `cycle:toggle-tour` and `cycle:tour-state` custom events. Stage descriptions, focused camera flights, checkpoint selection and both play states remain consistent. If the viewer changes the stage manually or the tab becomes hidden, the tour pauses in both locations. Entering or leaving fullscreen does not reset the tour.

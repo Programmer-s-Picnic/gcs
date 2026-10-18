@@ -130,3 +130,21 @@
 .approval-footer-inner{display:flex;align-items:center;gap:22px;justify-content:space-between;color:#d3ecdb;font-size:.85rem;font-weight:750;text-align:right}
 .approval-footer .brand{color:#f7fff1}
 @media(max-width:680px){.approval-header-note{font-size:.64rem;max-width:45%;line-height:1.35}.approval-footer-inner{flex-direction:column;align-items:flex-start;text-align:left}.road3d-stop-icon.road-atlas-icon{width:33px;height:33px}}
+
+/* A synchronized guided-tour control inside the immersive 3D stage information panel. */
+.road3d-fullscreen-caption .road3d-fullscreen-tour{display:flex;align-items:center;justify-content:flex-start;gap:9px;width:100%;margin-top:8px;padding:11px 12px;border:1px solid #246947;border-radius:12px;background:#155f43;color:#f6fff2;font:800 .76rem/1.2 Manrope,sans-serif;cursor:pointer;text-align:left;box-shadow:0 5px 16px #093f3021;transition:background .2s,transform .2s}
+.road3d-fullscreen-caption .road3d-fullscreen-tour:hover{background:#277a54;transform:translateY(-1px)}
+.road3d-fullscreen-caption .road3d-fullscreen-tour.is-playing{background:#eaf5e6;color:#155f43;border-color:#76b58a}
+.road3d-fullscreen-caption .road3d-fullscreen-tour.is-playing:hover{background:#d8ebd7}
+.road3d-tour-symbol{font-size:1.05rem;width:19px;flex:none;text-align:center}
+.road3d-tour-label{flex:1;white-space:nowrap}
+.road3d-tour-duration{font:650 .62rem/1.2 'DM Sans',sans-serif;opacity:.78;text-align:right}
+@media(max-width:800px){
+ .road3d-fullscreen-caption .road3d-fullscreen-tour{margin-top:5px;padding:9px 8px;gap:6px;font-size:.7rem}
+ .road3d-tour-duration{font-size:.58rem}
+}
+@media(max-width:480px){
+ .road3d-fullscreen-caption .road3d-fullscreen-tour{padding:8px 7px;font-size:.66rem}
+ .road3d-tour-duration{display:none}
+}
+@media(prefers-reduced-motion:reduce){.road3d-fullscreen-caption .road3d-fullscreen-tour{transition:none}}

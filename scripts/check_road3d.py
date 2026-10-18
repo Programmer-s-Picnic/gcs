@@ -63,13 +63,19 @@ if "road-icons/" in road:
     errors.append("Generic 3D icons are still referenced")
 for ident in ("road3d-fullscreen","road3d-exit","road3d-fullscreen-caption",
               "road3d-fullscreen-title","road3d-fullscreen-description",
-              "road3d-fullscreen-prev","road3d-fullscreen-next"):
+              "road3d-fullscreen-prev","road3d-fullscreen-next","road3d-fullscreen-tour"):
     if ident not in page.ids:errors.append("Missing fullscreen interface: "+ident)
 for marker in ("requestFullscreen()","document.exitFullscreen()","fullscreenchange",
                "fullDescription.textContent","road3d-fullscreen-prev",
-               "atlasDraw("):
+               "atlasDraw(","cycle:toggle-tour","cycle:tour-state"):
     if marker not in road:errors.append("Fullscreen or icon rendering missing: "+marker)
 if ".road3d-view:fullscreen" not in css or "road3d-fullscreen-caption" not in css:
     errors.append("Fullscreen layout missing")
+if "cycle:tour-state" not in controller or "cycle:toggle-tour" not in controller:
+    errors.append("Guided tour must share state with the existing control")
+if 'aria-pressed="false"' not in html.split('id="road3d-fullscreen-tour"')[1][:210]:
+    errors.append("Fullscreen guided tour needs an accessible pressed state")
+if ".road3d-fullscreen-tour" not in css:
+    errors.append("Fullscreen guided tour layout is missing")
 if errors:raise SystemExit("\n".join(errors))
 print("3D road: supplied images, link-free approval homepage, fullscreen and fallback verified.")
