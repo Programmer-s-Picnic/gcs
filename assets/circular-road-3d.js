@@ -15,6 +15,7 @@ try{
 const reduceMotion=window.matchMedia('(prefers-reduced-motion:reduce)').matches;
 const phone=window.matchMedia('(max-width:600px)').matches;
 const COLORS=['#40b57b','#3e91c8','#55a8ca','#50b393','#69b64c','#92bb59','#e5a356','#95ab77'];
+const ICONS=['generation-reduction','source-segregation','collection-transport','material-recovery','recycling','organic-processing','energy-recovery','scientific-disposal'];
 const labels=['Generation & Reduction','Source Segregation','Collection & Transport','Material Recovery (MRF)','Recycling','Organic Processing','Energy Recovery','Scientific Disposal'];
 const titles=['Waste Generation & Reduction','Source Segregation','Collection & Transportation','Material Recovery Facility','Recycling','Organic Waste Processing','Energy Recovery','Scientific Disposal'];
 const scene=new THREE.Scene();
@@ -106,7 +107,7 @@ function rounded(ctx,x,y,w,h,r){
  ctx.lineTo(x+w,y+h-r);ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);ctx.lineTo(x+r,y+h);
  ctx.quadraticCurveTo(x,y+h,x,y+h-r);ctx.lineTo(x,y+r);ctx.quadraticCurveTo(x,y,x+r,y);ctx.closePath();
 }
-function badgeTexture(head,detail,index,accent,isCenter=false){
+function badgeTexture(head,detail,index,accent,isCenter=false,iconIndex=-1){
  const canvas=document.createElement('canvas');canvas.width=640;canvas.height=isCenter?264:240;
  const ctx=canvas.getContext('2d');
  ctx.clearRect(0,0,canvas.width,canvas.height);
@@ -116,7 +117,7 @@ function badgeTexture(head,detail,index,accent,isCenter=false){
  ctx.strokeStyle=isCenter?'#419b78':'#7daf96';ctx.lineWidth=4;ctx.stroke();
  const a=new THREE.Color(accent).getStyle();
  ctx.fillStyle=a;rounded(ctx,34,34,87,canvas.height-74,23);ctx.fill();
- ctx.fillStyle='#ffffff';ctx.textAlign='center';ctx.font='800 64px Manrope,Arial,sans-serif';ctx.fillText(index,78,135);
+ ctx.fillStyle='#ffffff';ctx.textAlign='center';ctx.font='800 64px Manrope,Arial,sans-serif';ctx.fillText(index,78,isCenter?135:83);
  ctx.textAlign='left';ctx.fillStyle='#123f31';
  ctx.font='800 39px Manrope,Arial,sans-serif';
  if(isCenter){ctx.font='800 53px Manrope,Arial,sans-serif';ctx.fillText(head,146,114);ctx.fillStyle='#517c63';ctx.font='700 29px Manrope,Arial,sans-serif';ctx.fillText(detail,148,162);}
@@ -132,7 +133,17 @@ function badgeTexture(head,detail,index,accent,isCenter=false){
  ys.forEach((text,i)=>ctx.fillText(text,144,firstY+i*48));
  ctx.fillStyle='#5c886e';ctx.font='700 24px Manrope,Arial,sans-serif';ctx.fillText(detail,146,ys.length===1?166:186);
  }
- const tex=new THREE.CanvasTexture(canvas);tex.colorSpace=THREE.SRGBColorSpace;tex.anisotropy=Math.min(renderer.capabilities.getMaxAnisotropy(),4);return tex;
+ const tex=new THREE.CanvasTexture(canvas);
+tex.colorSpace=THREE.SRGBColorSpace;tex.anisotropy=Math.min(renderer.capabilities.getMaxAnisotropy(),4);
+if(iconIndex>=0){
+ const icon=new Image();
+ icon.addEventListener('load',()=>{
+   ctx.drawImage(icon,47,96,62,62);
+   tex.needsUpdate=true;
+ },{once:true});
+ icon.src='./assets/road-icons/'+ICONS[iconIndex]+'.svg';
+}
+return tex;
 }
 const centerSprite=new THREE.Sprite(new THREE.SpriteMaterial({map:badgeTexture('GeoCirculus','Nothing Wasted · Everything Circulated.','↻','#16784f',true),transparent:true,depthWrite:false}));
 centerSprite.position.set(0,3.4,0);centerSprite.scale.set(6,2.53,1);scene.add(centerSprite);
@@ -154,10 +165,15 @@ for(let i=0;i<8;i++){
  sphere.position.y=2.02;sphere.castShadow=!phone;postGroup.add(sphere);
  const glowRing=new THREE.Mesh(new THREE.TorusGeometry(.78,.09,12,32),new THREE.MeshBasicMaterial({color,transparent:true,opacity:.44}));
  glowRing.rotation.x=-Math.PI/2;glowRing.position.y=1.27;postGroup.add(glowRing);
- const number=new THREE.Sprite(new THREE.SpriteMaterial({map:badgeTexture(labels[i],i===3?'Recovery & sorting':'Waste management',String(i+1).padStart(2,'0'),COLORS[i]),transparent:true,depthTest:false,depthWrite:false}));
- number.position.set(0,3.55,0);number.scale.set(3.2,1.20,1);postGroup.add(number);
- for(const mesh of [base,post,sphere,glowRing,number]){mesh.userData.stageIndex=i;pickTargets.push(mesh);}
- const target={group:postGroup,ball:sphere,ring:glowRing,base:base,material:mat,sprite:number};stageObjects.push(target);
+ const iconTexture=new THREE.TextureLoader().load('./assets/road-icons/'+ICONS[i]+'.svg');
+ iconTexture.colorSpace=THREE.SRGBColorSpace;
+ const iconSprite=new THREE.Sprite(new THREE.SpriteMaterial({map:iconTexture,transparent:true,depthTest:false,depthWrite:false}));
+ iconSprite.position.set(0,2.74,0);iconSprite.scale.set(1.34,1.34,1);
+ postGroup.add(iconSprite);
+ const number=new THREE.Sprite(new THREE.SpriteMaterial({map:badgeTexture(labels[i],i===3?'Recovery & sorting':'Waste management',String(i+1).padStart(2,'0'),COLORS[i],false,i),transparent:true,depthTest:false,depthWrite:false}));
+ number.position.set(0,4.18,0);number.scale.set(3.2,1.20,1);postGroup.add(number);
+ for(const mesh of [base,post,sphere,glowRing,iconSprite,number]){mesh.userData.stageIndex=i;pickTargets.push(mesh);}
+ const target={group:postGroup,ball:sphere,ring:glowRing,base:base,material:mat,sprite:number,icon:iconSprite};stageObjects.push(target);
 }
 const treeStem=new THREE.CylinderGeometry(.105,.14,.8,8),treeCrown=new THREE.ConeGeometry(.60,1.55,10);
 const trunkMaterial=new THREE.MeshStandardMaterial({color:'#6b8b72',roughness:.9});
@@ -177,6 +193,49 @@ const controlsBtns={
  reset:document.getElementById('road3d-reset')
 };
 const stageButtons=[...root.querySelectorAll('[data-road-stop]')];
+const fullView=document.getElementById('road3d-view');
+const fullButton=document.getElementById('road3d-fullscreen');
+const exitButton=document.getElementById('road3d-exit');
+const fullCount=document.getElementById('road3d-fullscreen-count');
+const fullTitle=document.getElementById('road3d-fullscreen-title');
+const fullDescription=document.getElementById('road3d-fullscreen-description');
+function isFullscreen(){return document.fullscreenElement===fullView;}
+function refreshFullscreen(){
+ const open=isFullscreen();
+ fullButton.textContent=open?'⤢ Exit fullscreen':'⛶ Fullscreen';
+ fullButton.setAttribute('aria-pressed',String(open));
+ fullButton.setAttribute('aria-label',open?'Exit fullscreen 3D view':'Enter fullscreen 3D view');
+ exitButton.hidden=!open;
+ // The canvas changes dimensions after the Fullscreen API transition.
+ requestAnimationFrame(()=>requestAnimationFrame(resize));
+}
+async function toggleFullscreen(){
+ if(!document.fullscreenEnabled||!fullView.requestFullscreen){
+  fullButton.setAttribute('title','Fullscreen unavailable in this browser');
+  return;
+ }
+ try{
+  if(isFullscreen())await document.exitFullscreen();
+  else await fullView.requestFullscreen();
+ }catch(error){
+  console.warn('Fullscreen request did not complete',error);
+  fullButton.setAttribute('title','Fullscreen was blocked by your browser');
+ }
+}
+fullButton.addEventListener('click',toggleFullscreen);
+exitButton.addEventListener('click',()=>{if(isFullscreen())toggleFullscreen();});
+document.addEventListener('fullscreenchange',refreshFullscreen);
+document.addEventListener('keydown',event=>{
+ if(event.key.toLowerCase()!=='f'||event.repeat||event.altKey||event.ctrlKey||event.metaKey)return;
+ const focused=document.activeElement;
+ if(focused===renderer.domElement||focused===mount||fullView.contains(focused)){
+  event.preventDefault();toggleFullscreen();
+ }
+});
+const changeStage=delta=>root.dispatchEvent(new CustomEvent('cycle:choose',{detail:{index:(current+delta+8)%8}}));
+document.getElementById('road3d-fullscreen-prev').addEventListener('click',()=>changeStage(-1));
+document.getElementById('road3d-fullscreen-next').addEventListener('click',()=>changeStage(1));
+
 let current=0,flight=null,visibility=true,disposed=false;
 function cameraView(type,index=current){
  if(type==='top')return {pos:new THREE.Vector3(.01,phone?31:29,.01),target:new THREE.Vector3(0,.2,0)};
@@ -215,7 +274,12 @@ for(const [name,btn] of Object.entries(controlsBtns)){
 }
 root.addEventListener('cycle:selected',event=>{
  const n=Number(event.detail?.index);
- if(Number.isInteger(n)&&n>=0&&n<8)select(n,true);
+ if(Number.isInteger(n)&&n>=0&&n<8){
+  select(n,true);
+  fullCount.textContent=String(n+1).padStart(2,'0')+' / 08 · CIRCULAR JOURNEY';
+  fullTitle.textContent=document.getElementById('cycle-detail-title').textContent;
+  fullDescription.textContent=document.getElementById('cycle-detail-description').textContent;
+ }
 });
 const raycaster=new THREE.Raycaster(),pointer=new THREE.Vector2();
 let start=null;
@@ -238,7 +302,7 @@ const tempCam=new THREE.Vector3(),tempTarget=new THREE.Vector3();
 function tick(time){
  if(disposed)return;
  requestAnimationFrame(tick);
- if(!visibility||document.hidden)return;
+ if((!visibility&&!isFullscreen())||document.hidden)return;
  if(phone&&time-lastFrame<30)return;lastFrame=time;
  if(flight){
   const t=Math.max(0,Math.min(1,(time-flight.start)/flight.duration)),v=t*t*(3-2*t);
@@ -260,6 +324,8 @@ if('ResizeObserver'in window)new ResizeObserver(resize).observe(mount);
 if('IntersectionObserver'in window)new IntersectionObserver(entries=>{visibility=entries[0]?.isIntersecting??true;},{threshold:.02}).observe(mount);
 renderer.domElement.addEventListener('webglcontextlost',event=>{event.preventDefault();disposed=true;document.documentElement.classList.remove('road3d-ready');console.warn('WebGL context lost; returned to accessible diagram.');});
 select(0,false);
+exitButton.hidden=true;
+if(!document.fullscreenEnabled){fullButton.disabled=true;fullButton.title='Fullscreen is unavailable in this browser';}
 document.documentElement.classList.add('road3d-ready');
 resize();requestAnimationFrame(tick);
 })(THREE,OrbitControls);

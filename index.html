@@ -8,15 +8,26 @@
 <div class="road3d-canvas-wrap">
 <div id="road3d-canvas" class="road3d-canvas" role="img" aria-label="Interactive three-dimensional waste-management road with eight clickable checkpoints. Drag to rotate, scroll or pinch to zoom."></div>
 <div class="road3d-badge"><span class="road3d-badge-dot"></span> Interactive 3D circular road</div>
+<button type="button" id="road3d-exit" class="road3d-exit" aria-label="Exit fullscreen 3D view">✕ Exit fullscreen</button>
+<div class="road3d-fullscreen-caption" id="road3d-fullscreen-caption" aria-live="polite">
+<span class="road3d-fullscreen-kicker" id="road3d-fullscreen-count">01 / 08 · CIRCULAR JOURNEY</span>
+<strong id="road3d-fullscreen-title">Waste Generation &amp; Reduction</strong>
+<p id="road3d-fullscreen-description">Reduce waste at the source through better choices, reuse and repair.</p>
+<div class="road3d-fullscreen-steps">
+<button type="button" id="road3d-fullscreen-prev" aria-label="Previous checkpoint">← Previous</button>
+<button type="button" id="road3d-fullscreen-next" aria-label="Next checkpoint">Next →</button>
+</div>
+</div>
 <div class="road3d-camera-controls" aria-label="3D camera presets" role="group">
 <button type="button" id="road3d-perspective" class="road3d-camera-btn is-active" aria-pressed="true">◇ Perspective</button>
 <button type="button" id="road3d-top" class="road3d-camera-btn" aria-pressed="false">⊙ Top view</button>
 <button type="button" id="road3d-focus" class="road3d-camera-btn" aria-pressed="false">⌖ Focus stage</button>
 <button type="button" id="road3d-reset" class="road3d-camera-btn" aria-label="Reset 3D camera">↺ Reset</button>
+<button type="button" id="road3d-fullscreen" class="road3d-camera-btn road3d-fullscreen-toggle" aria-label="Enter fullscreen 3D view" aria-pressed="false" aria-keyshortcuts="F">⛶ Fullscreen</button>
 </div>
 <div class="road3d-hint" id="road3d-hint">Drag to change camera angle <span>·</span> Scroll or pinch to zoom <span>·</span> Tap a checkpoint</div>
 </div>
-<div class="road3d-stop-list" role="group" aria-label="Select a waste management checkpoint"><button type="button" class="road3d-stop" data-road-stop="0" aria-pressed="true"><span>01</span>Generation & Reduction</button><button type="button" class="road3d-stop" data-road-stop="1" aria-pressed="false"><span>02</span>Source Segregation</button><button type="button" class="road3d-stop" data-road-stop="2" aria-pressed="false"><span>03</span>Collection & Transport</button><button type="button" class="road3d-stop" data-road-stop="3" aria-pressed="false"><span>04</span>Material Recovery (MRF)</button><button type="button" class="road3d-stop" data-road-stop="4" aria-pressed="false"><span>05</span>Recycling</button><button type="button" class="road3d-stop" data-road-stop="5" aria-pressed="false"><span>06</span>Organic Processing</button><button type="button" class="road3d-stop" data-road-stop="6" aria-pressed="false"><span>07</span>Energy Recovery</button><button type="button" class="road3d-stop" data-road-stop="7" aria-pressed="false"><span>08</span>Scientific Disposal</button></div>
+<div class="road3d-stop-list" role="group" aria-label="Select a waste management checkpoint"><button type="button" class="road3d-stop" data-road-stop="0" aria-pressed="true"><img class="road3d-stop-icon" src="./assets/road-icons/generation-reduction.svg" alt="" width="32" height="32" loading="lazy"><span>01</span>Generation & Reduction</button><button type="button" class="road3d-stop" data-road-stop="1" aria-pressed="false"><img class="road3d-stop-icon" src="./assets/road-icons/source-segregation.svg" alt="" width="32" height="32" loading="lazy"><span>02</span>Source Segregation</button><button type="button" class="road3d-stop" data-road-stop="2" aria-pressed="false"><img class="road3d-stop-icon" src="./assets/road-icons/collection-transport.svg" alt="" width="32" height="32" loading="lazy"><span>03</span>Collection & Transport</button><button type="button" class="road3d-stop" data-road-stop="3" aria-pressed="false"><img class="road3d-stop-icon" src="./assets/road-icons/material-recovery.svg" alt="" width="32" height="32" loading="lazy"><span>04</span>Material Recovery (MRF)</button><button type="button" class="road3d-stop" data-road-stop="4" aria-pressed="false"><img class="road3d-stop-icon" src="./assets/road-icons/recycling.svg" alt="" width="32" height="32" loading="lazy"><span>05</span>Recycling</button><button type="button" class="road3d-stop" data-road-stop="5" aria-pressed="false"><img class="road3d-stop-icon" src="./assets/road-icons/organic-processing.svg" alt="" width="32" height="32" loading="lazy"><span>06</span>Organic Processing</button><button type="button" class="road3d-stop" data-road-stop="6" aria-pressed="false"><img class="road3d-stop-icon" src="./assets/road-icons/energy-recovery.svg" alt="" width="32" height="32" loading="lazy"><span>07</span>Energy Recovery</button><button type="button" class="road3d-stop" data-road-stop="7" aria-pressed="false"><img class="road3d-stop-icon" src="./assets/road-icons/scientific-disposal.svg" alt="" width="32" height="32" loading="lazy"><span>08</span>Scientific Disposal</button></div>
 <div class="road3d-hint-mobile">Rotate the model with one finger · pinch to zoom · select any stop</div>
 </div>
 <div class="cycle-orbit-scene" id="cycle-orbit-scene">

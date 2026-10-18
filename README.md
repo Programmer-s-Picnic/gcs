@@ -101,3 +101,9 @@ The homepage now features a Three.js elevated circular waste-management road wit
 The implementation uses the pinned Three.js 0.169.0 and OrbitControls ES modules via the jsDelivr import map in root `index.html`. It does not require a framework or build step. Source: `assets/circular-road-3d.js`; styling: `assets/circular-road-3d.css`. Core stage descriptions and tour remain in `assets/circular-journey.js`.
 
 Site CI checks the JavaScript syntax with Node and validates the 3D markup and responsive fallback with `scripts/check_road3d.py`. The first visit requires connectivity to the third-party Three.js module CDN; on failure the original 2D stage experience remains available.
+
+## Illustrated checkpoints and fullscreen (October 2026)
+
+Each of the eight waste-management checkpoints now has a distinct, locally hosted SVG pictogram (source reduction, segregation bins, collection truck, MRF sorting facility, recycling arrows, composting, energy plant, and controlled disposal). SVGs are in `assets/road-icons/` and are used in both the accessible stage buttons and the Three.js labels through a canvas texture.
+
+Use **⛶ Fullscreen** inside the 3D camera controls to enter a dedicated viewport-sized 3D scene. The fullscreen view keeps rotate/zoom, top/perspective/focus/reset controls, the eight checkpoint buttons and a floating explanation panel with previous/next buttons. The **Exit fullscreen** control or **Esc** leaves fullscreen. **F** also toggles fullscreen when the 3D viewer is focused. When WebGL is unavailable, the existing 2D interactive model remains accessible.

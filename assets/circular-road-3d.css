@@ -40,3 +40,80 @@
 }
 @media(max-width:380px){.road3d-canvas-wrap{height:340px;min-height:340px}.road3d-camera-btn{font-size:.62rem;padding:6px}.road3d-hint{font-size:.58rem}.road3d-stop{font-size:.6rem}}
 @media(prefers-reduced-motion:reduce){.road3d-camera-btn,.road3d-stop{transition:none!important}.road3d-stop:hover,.road3d-camera-btn:hover{transform:none!important}}
+
+
+/* Illustrated checkpoint key */
+.road3d-stop-icon{width:30px;height:30px;display:block;object-fit:contain;border-radius:8px;flex:none;background:#f3fbf2}
+.road3d-stop{gap:6px}
+.road3d-stop>span{order:-1}
+.road3d-stop.is-selected .road3d-stop-icon{background:#e1f7e6;box-shadow:0 0 0 2px #50aa8029}
+
+/* Native fullscreen: 3D camera remains interactive and fits the monitor. */
+.road3d-exit,.road3d-fullscreen-caption{display:none}
+.road3d-fullscreen-toggle{white-space:nowrap}
+.road3d-view:fullscreen{
+ display:flex!important;flex-direction:column;gap:9px;padding:10px;
+ width:100%;height:100%;overflow:hidden;background:#123c2f;color:#e8f7eb;
+}
+.road3d-view:fullscreen .road3d-canvas-wrap{
+ flex:1 1 auto;min-height:0;height:auto;max-height:none;
+ border-radius:15px;border:1px solid #55876c;box-shadow:none;
+}
+.road3d-view:fullscreen .road3d-canvas{height:100%;width:100%}
+.road3d-view:fullscreen .road3d-badge{display:none}
+.road3d-view:fullscreen .road3d-camera-controls{bottom:16px}
+.road3d-view:fullscreen .road3d-hint{display:none}
+.road3d-view:fullscreen .road3d-stop-list{
+ display:flex;flex:0 0 auto;flex-wrap:nowrap;overflow-x:auto;
+ min-height:62px;max-height:76px;gap:8px;
+ margin:0;padding:4px 6px 6px;scrollbar-width:thin;scrollbar-color:#8fc3a2 #174f3c;
+}
+.road3d-view:fullscreen .road3d-stop{
+ flex:1 0 146px;width:auto;min-width:144px;max-width:222px;
+ min-height:56px;background:#f2faf2;border-color:#9cc5a4;color:#24593f
+}
+.road3d-view:fullscreen .road3d-stop.is-selected{background:#d8f2dd;border:2px solid #40b47e}
+.road3d-view:fullscreen .road3d-hint-mobile{display:none}
+.road3d-view:fullscreen .road3d-exit{
+ position:absolute;display:flex;align-items:center;justify-content:center;
+ z-index:30;top:15px;right:15px;
+ background:#0e4937;color:#f5fff5;border:1px solid #90ba9a;
+ border-radius:12px;padding:10px 15px;min-height:41px;
+ font-weight:800;font-size:.79rem;box-shadow:0 4px 24px #0f382727
+}
+.road3d-view:fullscreen .road3d-exit:hover{background:#226e4f}
+.road3d-view:fullscreen .road3d-fullscreen-caption{
+ display:flex;flex-direction:column;gap:6px;
+ position:absolute;left:17px;top:18px;z-index:15;
+ width:min(345px,37%);max-height:calc(100% - 124px);overflow-y:auto;
+ padding:16px 17px;background:#f8fff2eb;color:#1a4835;
+ border:1px solid #b7dabd;border-radius:17px;
+ box-shadow:0 12px 35px #0d392b2b;backdrop-filter:blur(10px)
+}
+.road3d-fullscreen-kicker{font-size:.65rem;letter-spacing:.13em;color:#29875d;font-weight:800}
+.road3d-fullscreen-caption strong{font:800 clamp(.98rem,1.45vw,1.32rem)/1.2 Manrope,sans-serif;letter-spacing:-.04em}
+.road3d-fullscreen-caption p{font-size:.73rem;line-height:1.5;color:#587568;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:4;overflow:hidden}
+.road3d-fullscreen-steps{display:flex;gap:7px;margin-top:6px}
+.road3d-fullscreen-steps button{border:1px solid #a9cbb4;border-radius:9px;padding:7px 9px;background:#e6f4e5;color:#226d4e;font-weight:800;font-size:.71rem}
+.road3d-fullscreen-steps button:hover{background:#d4eccc}
+.road3d-view:fullscreen .road3d-fullscreen-toggle{background:#145f44;color:#fafffb;border-color:#145f44}
+@media(max-width:800px){
+ .road3d-view:fullscreen{padding:5px;gap:4px}
+ .road3d-view:fullscreen .road3d-canvas-wrap{border-radius:9px}
+ .road3d-view:fullscreen .road3d-exit{top:9px;right:9px;font-size:.7rem;padding:7px 10px;min-height:36px}
+ .road3d-view:fullscreen .road3d-fullscreen-caption{top:9px;left:9px;max-height:48%;width:min(260px,50%);padding:10px 12px;border-radius:12px;gap:4px}
+ .road3d-view:fullscreen .road3d-fullscreen-caption strong{font-size:.88rem}
+ .road3d-view:fullscreen .road3d-fullscreen-caption p{font-size:.66rem;-webkit-line-clamp:3}
+ .road3d-view:fullscreen .road3d-camera-controls{bottom:8px;left:5px;right:5px;gap:4px}
+ .road3d-view:fullscreen .road3d-camera-btn{padding:7px 9px;font-size:.69rem}
+ .road3d-view:fullscreen .road3d-stop-list{min-height:52px;max-height:60px;padding:3px}
+ .road3d-view:fullscreen .road3d-stop{min-height:45px;min-width:130px;flex-basis:130px;padding:5px 8px;font-size:.64rem}
+ .road3d-view:fullscreen .road3d-stop-icon{width:26px;height:26px}
+}
+@media(max-width:480px){
+ .road3d-view:fullscreen .road3d-fullscreen-caption{top:52px;left:9px;width:min(230px,61%);max-height:35%;padding:8px 10px}
+ .road3d-view:fullscreen .road3d-fullscreen-caption p{display:none}
+ .road3d-view:fullscreen .road3d-camera-controls{bottom:9px}
+ .road3d-view:fullscreen .road3d-fullscreen-steps button{padding:5px 7px;font-size:.61rem}
+ .road3d-stop-icon{width:27px;height:27px}
+}
