@@ -83,3 +83,7 @@ The page templates are currently plain HTML by design. A future CMS or generatio
 Client review → content/identity approvals → verified facility details → licensed imagery → fuller curriculum → admin workflow → production migration.
 
 Source maintained in Programmer-s-Picnic/gcs.
+
+## Venture presentation
+
+The **20-slide restyled web presentation** is available at `presentation/index.html`, with slide content in `presentation/data.js`, display logic in `presentation/deck.js`, and styling in `presentation/deck.css`. It preserves the pitch deck's topics and reported figures but is a browser-native redesign rather than embedded PowerPoint screenshots. It includes autoplay, fullscreen, keyboard and touch controls, direct slide links, and an overview grid. The uploaded source PPTX is not hosted in this repository.

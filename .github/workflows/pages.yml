@@ -28,7 +28,7 @@ jobs:
       - name: Prepare deployment directory
         run: |
           mkdir -p _site
-          cp -r assets about solutions materials projects impact learn insights contact privacy _site/
+          cp -r assets about solutions materials projects impact learn insights contact privacy presentation _site/
           cp index.html 404.html robots.txt sitemap.xml .nojekyll _site/
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5

@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#09392c">
+<meta name="robots" content="noindex,follow">
+<title>Company Presentation | GeoCirculus Ecotech</title>
+<meta name="description" content="Explore GeoCirculus Ecotech's 20-slide venture pitch deck on circular waste management, recycling, business model and proposed pilot.">
+<link rel="canonical" href="https://programmer-s-picnic.github.io/gcs/presentation/">
+<link rel="icon" href="../assets/mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="./deck.css">
+<script src="./data.js" defer></script>
+<script src="./deck.js" defer></script>
+</head>
+<body>
+<a href="#viewer" style="position:absolute;left:-100vw" onfocus="this.style.left='16px'" onblur="this.style.left='-100vw'">Skip to presentation</a>
+<header class="topbar">
+<div class="top-left">
+<a href="../" aria-label="Return to GeoCirculus home"><img src="../assets/mark.svg" alt=""></a>
+<div class="top-name">GeoCirculus<small>Ecotech Pvt Ltd</small></div>
+</div>
+<div class="top-actions">
+<a href="../">← Back to website</a>
+<a href="../contact/" class="outline-button">Contact ↗</a>
+</div>
+</header>
+<div class="subhead">
+<div><strong>GeoCirculus · Venture Pitch Deck</strong><small>20 slides · 16 October 2026 · Strategy, recycling and circular economy</small></div>
+<span class="label">Interactive presentation</span>
+</div>
+<main id="viewer" class="viewer">
+<div id="stage" class="stage" aria-label="Slide presentation viewer">
+<div id="slide-window" class="slide-window" tabindex="0" aria-label="Presentation slide. Swipe or use arrow keys to navigate.">
+<div id="slide" class="slide-scale"></div>
+<div class="stage-overlay" aria-hidden="false">
+<button id="prev-float" type="button" aria-label="Previous slide">‹</button>
+<button id="next-float" type="button" aria-label="Next slide">›</button>
+</div>
+</div>
+<div class="progress-track" role="presentation"><div id="position" class="progress-fill"></div></div>
+<div class="toolbar" role="group" aria-label="Presentation controls">
+<div class="toolbar-main">
+<button id="prev" class="tool-btn" aria-label="Previous slide" type="button">← <span class="long">Previous</span></button>
+<span id="counter" class="count" aria-live="off">01 / 20</span>
+<button id="next" class="tool-btn primary" aria-label="Next slide" type="button"><span class="long">Next</span> →</button>
+</div>
+<div class="toolbar-side">
+<button id="play" class="tool-btn" type="button" aria-label="Start autoplay" aria-pressed="false">▶ <span class="long">Autoplay</span></button>
+<button id="grid" class="tool-btn" type="button" aria-haspopup="dialog" aria-controls="overview">▦ <span class="long">All slides</span></button>
+<button id="fullscreen" class="tool-btn" type="button">⛶ Fullscreen</button>
+<button id="share" class="tool-btn" type="button" aria-label="Copy link to this slide">↗</button>
+</div>
+</div>
+</div>
+<section class="filmstrip-area" aria-label="Select a slide">
+<div class="filmstrip-header"><h3>Explore the presentation</h3><small>Choose a slide · scroll horizontally</small></div>
+<div id="filmstrip" class="filmstrip"></div>
+</section>
+<p class="help">Keyboard: ← / → change slides · F fullscreen · P play or pause · G overview · Home / End jump · swipe on touchscreens</p>
+<p id="sr-current" class="sr-only" aria-live="polite" aria-atomic="true" style="position:absolute;clip:rect(0,0,0,0);width:1px;height:1px;overflow:hidden"></p>
+</main>
+<div id="overview" class="overlay" role="dialog" aria-modal="true" aria-labelledby="overview-title" aria-hidden="true">
+<div class="overview"><div class="overview-top"><h2 id="overview-title">All 20 slides</h2><button id="close-overview" class="tool-btn" type="button" aria-label="Close slide overview">Close ✕</button></div><div id="overview-grid" class="overview-grid"></div></div>
+</div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<script>
+document.getElementById('prev-float').addEventListener('click',()=>document.getElementById('prev').click());
+document.getElementById('next-float').addEventListener('click',()=>document.getElementById('next').click());
+</script>
+</body></html>
