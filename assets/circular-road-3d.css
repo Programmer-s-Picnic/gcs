@@ -1,0 +1,42 @@
+
+/* Real 3D circular road; fallback is the existing interactive eight-stage diagram. */
+.road3d-view{display:none;min-width:0;width:100%;position:relative}
+.road3d-ready .road3d-view{display:block}
+.road3d-ready .cycle-orbit-scene,.road3d-ready .cycle-diagram-caption{display:none}
+.road3d-ready .cycle-orbit-wrap{min-height:580px;justify-content:flex-start;align-items:stretch}
+.road3d-canvas-wrap{width:100%;height:clamp(460px,43vw,625px);position:relative;overflow:hidden;border-radius:27px;border:1px solid rgba(60,129,85,.28);background:radial-gradient(ellipse at 50% 33%,#f8fcf5,#dbece0);box-shadow:inset 0 2px 15px rgba(0,65,35,.04),0 16px 38px rgba(20,75,51,.09)}
+.road3d-canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:grab;outline-offset:-4px}
+.road3d-canvas:active{cursor:grabbing}
+.road3d-canvas canvas{display:block;width:100%;height:100%;touch-action:none}
+.road3d-badge{position:absolute;left:15px;top:17px;border:1px solid #b8dbc4;background:#f7fff1e8;backdrop-filter:blur(12px);border-radius:100px;padding:9px 13px;display:flex;align-items:center;gap:8px;color:#26674e;font-size:.71rem;font-weight:800;pointer-events:none;box-shadow:0 5px 18px #1f694220}
+.road3d-badge-dot{width:8px;height:8px;background:#30b37b;border-radius:50%;box-shadow:0 0 0 4px #30b37b1d}
+.road3d-camera-controls{position:absolute;left:15px;right:15px;bottom:49px;display:flex;gap:7px;align-items:center;justify-content:center;flex-wrap:wrap;pointer-events:none}
+.road3d-camera-btn{pointer-events:auto;border:1px solid #c1dbcc;border-radius:11px;background:#ffffffec;color:#2e6552;backdrop-filter:blur(10px);padding:9px 13px;min-height:38px;font-weight:800;font-size:.74rem;box-shadow:0 6px 14px rgba(0,54,27,.06);transition:background .2s,transform .2s}
+.road3d-camera-btn:hover{background:#e8f5e9;transform:translateY(-1px)}
+.road3d-camera-btn.is-active{background:#145f44;border-color:#145f44;color:white}
+.road3d-hint{position:absolute;bottom:13px;left:0;right:0;text-align:center;color:#4f7963;text-shadow:0 1px white;font-weight:750;font-size:.72rem;pointer-events:none}
+.road3d-hint span{color:#2a9973;margin:0 3px}
+.road3d-stop-list{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin:11px 0 0}
+.road3d-stop{display:flex;align-items:center;gap:7px;text-align:left;border:1px solid #cee4d6;background:#f9fdf6;color:#446d56;border-radius:12px;padding:8px 10px;min-height:41px;font:700 .73rem/1.25 Manrope,sans-serif;letter-spacing:-.02em;transition:border-color .2s,background .2s,transform .2s}
+.road3d-stop span{border:1px solid #b1d7bf;color:#1d865f;display:grid;place-items:center;border-radius:50%;width:22px;height:22px;flex-shrink:0;font:800 .57rem Manrope,sans-serif}
+.road3d-stop:hover{border-color:#53ad81;background:#eaf8eb;transform:translateY(-2px)}
+.road3d-stop.is-selected{background:#dcf1e2;border-color:#399e71;color:#175c43;box-shadow:0 3px 10px #17623e0d}
+.road3d-stop.is-selected span{background:#176b4e;border-color:#176b4e;color:white}
+.road3d-hint-mobile{display:none;color:#527663;font-size:.72rem;margin:8px 0 0;text-align:center}
+.cycle-detail-category{max-width:70%;text-align:center}
+@media(min-width:1400px){.road3d-canvas-wrap{height:625px}.road3d-ready .cycle-orbit-wrap{min-height:655px}}
+@media(max-width:1150px){.road3d-ready .cycle-orbit-wrap{min-height:0}.road3d-canvas-wrap{height:530px}.road3d-stop-list{grid-template-columns:repeat(2,minmax(0,1fr))}.road3d-stop{font-size:.71rem;padding:8px}}
+@media(max-width:900px){.road3d-canvas-wrap{height:min(74vw,600px);min-height:460px}.road3d-stop-list{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:600px){
+ .road3d-canvas-wrap{min-height:350px;height:380px;border-radius:20px}
+ .road3d-badge{left:9px;top:10px;padding:6px 10px;font-size:.61rem}
+ .road3d-camera-controls{bottom:46px;left:8px;right:8px;gap:5px}
+ .road3d-camera-btn{min-height:35px;padding:6px 8px;font-size:.66rem}
+ .road3d-hint{font-size:.62rem;padding:0 6px}
+ .road3d-stop-list{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+ .road3d-stop{min-height:43px;font-size:.66rem;padding:7px 8px}
+ .road3d-hint-mobile{display:block}
+ .road3d-ready .cycle-orbit-wrap{display:block}
+}
+@media(max-width:380px){.road3d-canvas-wrap{height:340px;min-height:340px}.road3d-camera-btn{font-size:.62rem;padding:6px}.road3d-hint{font-size:.58rem}.road3d-stop{font-size:.6rem}}
+@media(prefers-reduced-motion:reduce){.road3d-camera-btn,.road3d-stop{transition:none!important}.road3d-stop:hover,.road3d-camera-btn:hover{transform:none!important}}

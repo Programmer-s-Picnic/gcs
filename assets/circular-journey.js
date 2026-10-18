@@ -47,6 +47,7 @@ function update(index,userInitiated=true){
  icon.querySelector('svg').innerHTML=ICONS[current];icon.querySelector('svg').style.color=item.tint;
  progress.style.width=((current+1)*12.5)+'%';progress.parentNode.setAttribute('aria-label','Stage '+(current+1)+' of 8');
  tags.replaceChildren(...item.tags.map(label=>{const chip=document.createElement('span');chip.textContent=label;return chip;}));
+ root.dispatchEvent(new CustomEvent('cycle:selected',{detail:{index:current,name:item.name,fromUser:userInitiated}}));
 }
 function play(){
  if(playing){pause();return;}
@@ -56,6 +57,7 @@ function play(){
 function pause(){
  clearInterval(timer);timer=null;playing=false;tour.innerHTML='<span aria-hidden="true">▶</span> Play guided tour';tour.setAttribute('aria-pressed','false');
 }
+root.addEventListener('cycle:choose',event=>{const index=Number(event.detail?.index);if(Number.isInteger(index)&&index>=0&&index<steps.length)update(index);});
 nodes.forEach((node,index)=>{
  node.addEventListener('click',()=>update(index));
  node.addEventListener('keydown',event=>{

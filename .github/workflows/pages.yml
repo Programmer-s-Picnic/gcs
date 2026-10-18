@@ -28,6 +28,8 @@ jobs:
           python3 scripts/check_site.py
           python3 scripts/check_cycle_hero.py
           node --check assets/circular-journey.js
+          node --check assets/circular-road-3d.js
+          python3 scripts/check_road3d.py
       - name: Prepare deployment directory
         run: |
           mkdir -p _site
