@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://programmer-s-picnic.github.io/gcs/sitemap.xml
